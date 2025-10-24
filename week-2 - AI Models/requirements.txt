@@ -1,0 +1,25 @@
+# Core scientific stack
+numpy>=1.22
+pandas>=1.5
+scipy>=1.9
+matplotlib>=3.6
+seaborn>=0.12
+
+# Machine learning
+scikit-learn>=1.2
+statsmodels>=0.14
+xgboost>=1.7
+
+# Deep learning (CPU-only)
+torch>=2.0
+torchvision>=0.15
+pillow>=9.0
+tqdm>=4.66
+
+# NLP / Transformers
+transformers>=4.44
+datasets>=2.19
+accelerate>=0.30
+
+# Jupyter
+jupyterlab>=4.0
