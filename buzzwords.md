@@ -44,3 +44,18 @@
 - **Recurrent Neural Networks (RNNs)**: Sequential models capturing temporal dependencies.  
 - **Long Short Term Memory (LSTM)**: RNN variant solving vanishing gradient problem, remembers long-term dependencies.  
 - **Gated Recurrent Units (GRU)**: Simplified LSTM with fewer parameters, faster but similar performance.  
+
+- Semantic Matching or Semantic Search
+- Embeddings
+- Re-Rankers
+- Knowledge Representation 
+- Similarity Matching 
+- Agentic RAG (after 3 weeks)
+- Graph RAG
+- Chunk 
+- Chunk Size 
+- Evaluate the RAG System 
+
+- Vector Database
+- Sql/NoSQL Db
+- Compute system 
