@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Basic Calculator MCP Server
 
 A simple MCP server demonstrating core MCP concepts using **FastMCP** - the easiest way to build MCP servers in Python!
@@ -187,4 +186,3 @@ This example teaches:
 ---
 
 **Remember**: With FastMCP, building MCP servers is as easy as writing Python functions! 🐍✨
-# AI Generated Code by Deloitte + Cursor (END)

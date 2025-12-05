@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Exercise 3: Enterprise MCP Architecture Design
 
 **Difficulty**: Advanced  
@@ -229,4 +228,3 @@ if __name__ == "__main__":
 ---
 
 **This is your capstone exercise!** Apply everything you've learned about MCP to design a real-world solution. 🚀
-# AI Generated Code by Deloitte + Cursor (END)

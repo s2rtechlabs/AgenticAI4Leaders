@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Exercise 1: Build a Weather MCP Server with FastMCP
 
 **Difficulty**: Beginner  
@@ -337,4 +336,3 @@ weather-mcp-server/
 ---
 
 **Good luck!** Remember: With FastMCP, building MCP servers is just writing Python functions! 🐍✨
-# AI Generated Code by Deloitte + Cursor (END)

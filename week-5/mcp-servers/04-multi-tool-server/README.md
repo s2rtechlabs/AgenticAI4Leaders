@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Multi-Tool Enterprise MCP Server
 
 Production-ready MCP server with authentication, RBAC, and multiple tool categories using **FastMCP**.
@@ -229,4 +228,3 @@ fastmcp dev server.py
 ---
 
 **Security Note**: In production, use proper secret management (HashiCorp Vault, AWS Secrets Manager) for API keys! 🔒
-# AI Generated Code by Deloitte + Cursor (END)

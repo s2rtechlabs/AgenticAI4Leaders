@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Database Connector MCP Server
 
 MCP server for PostgreSQL database integration using **FastMCP**.
@@ -229,4 +228,3 @@ INSERT INTO orders (customer_id, product, amount) VALUES
 ---
 
 **Remember**: Always use parameterized queries! Never trust user input! 🔒
-# AI Generated Code by Deloitte + Cursor (END)

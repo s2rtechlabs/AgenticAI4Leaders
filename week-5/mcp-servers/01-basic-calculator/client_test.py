@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 """
 Test client for Calculator MCP Server (FastMCP)
 ================================================

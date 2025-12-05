@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # CRM Integration MCP Server
 
 MCP server demonstrating external API integration using **FastMCP**.
@@ -185,4 +184,3 @@ fastmcp dev server.py
 ---
 
 **Tip**: Start with mock data, then integrate with the real API! 🎯
-# AI Generated Code by Deloitte + Cursor (END)

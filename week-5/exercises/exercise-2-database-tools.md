@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Exercise 2: Database Integration MCP Server
 
 **Difficulty**: Intermediate  
@@ -293,4 +292,3 @@ database-mcp-server/
 ---
 
 **Remember**: Always use parameterized queries! Never trust user input! 🔒
-# AI Generated Code by Deloitte + Cursor (END)

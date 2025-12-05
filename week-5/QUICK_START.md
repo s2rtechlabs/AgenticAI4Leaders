@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Week 5: MCP Quick Start Guide
 
 Get up and running with MCP using **FastMCP** in 5 minutes! 🚀

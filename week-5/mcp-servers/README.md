@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # MCP Server Examples using FastMCP
 
 This directory contains **beginner-friendly** MCP server examples using **FastMCP** - the easiest way to build MCP servers in Python!
@@ -291,4 +290,3 @@ python server.py
 ---
 
 **Questions?** Check individual README files or explore the MCP Inspector!
-# AI Generated Code by Deloitte + Cursor (END)

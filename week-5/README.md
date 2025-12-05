@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Week 5: MCP (Model Context Protocol) - Building AI Tool Integrations
 
 ## 🎯 Overview

@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 """
 Basic Calculator MCP Server using FastMCP
 ==========================================
@@ -206,4 +205,3 @@ if __name__ == "__main__":
     # Run the server (default: stdio transport)
     # For HTTP/SSE: fastmcp run server.py --transport sse --port 8000
     mcp.run()
-# AI Generated Code by Deloitte + Cursor (END)

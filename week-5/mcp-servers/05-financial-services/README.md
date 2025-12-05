@@ -1,4 +1,3 @@
-# AI Generated Code by Deloitte + Cursor (BEGIN)
 # Financial Services MCP Server - Case Study Implementation
 
 Enterprise-grade MCP server based on the Fortune 500 financial services case study using **FastMCP**.
@@ -264,4 +263,3 @@ fastmcp dev server.py
 ---
 
 **This is the culmination of all MCP concepts!** Study this to understand enterprise-grade implementation. 🏦
-# AI Generated Code by Deloitte + Cursor (END)
