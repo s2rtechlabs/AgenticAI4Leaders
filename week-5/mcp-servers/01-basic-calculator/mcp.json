@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "calculator": {
+      "command": "python",
+      "args": ["/Users/Srimouli/Documents/Sessions/New Batch/week-5/mcp-servers/01-basic-calculator/server.py"],
+      "env": {}
+    }
+  }
+}
+

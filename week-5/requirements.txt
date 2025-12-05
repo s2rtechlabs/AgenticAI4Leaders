@@ -1,0 +1,75 @@
+# AI Generated Code by Deloitte + Cursor (BEGIN)
+# Week 5: MCP (Model Context Protocol) - Python Dependencies
+
+# ============================================================
+# CORE MCP LIBRARY (The main framework!)
+# ============================================================
+fastmcp>=2.0.0                      # FastMCP - The easiest way to build MCP servers!
+mcp>=1.0.0                          # Model Context Protocol SDK
+
+# ============================================================
+# AI PROVIDERS (For connecting to AI systems)
+# ============================================================
+anthropic>=0.18.0                   # Anthropic Claude API
+openai>=1.12.0                      # OpenAI API
+
+# ============================================================
+# HTTP & ASYNC (For advanced/production use)
+# ============================================================
+httpx>=0.26.0                       # Async HTTP client (for testing)
+uvicorn[standard]>=0.27.0           # ASGI server (for HTTP transport)
+
+# ============================================================
+# DATABASE CONNECTORS (For database examples)
+# ============================================================
+asyncpg>=0.29.0                     # PostgreSQL async driver
+sqlalchemy>=2.0.0                   # SQL toolkit and ORM
+
+# ============================================================
+# UTILITIES
+# ============================================================
+pydantic>=2.5.0                     # Data validation
+python-dotenv>=1.0.0                # Environment variables
+rich>=13.7.0                        # Rich terminal output
+
+# ============================================================
+# DEVELOPMENT TOOLS
+# ============================================================
+pytest>=7.4.0                       # Testing framework
+pytest-asyncio>=0.23.0              # Async test support
+
+# ============================================================
+# OPTIONAL: For advanced/production examples
+# ============================================================
+# Uncomment these as needed:
+#
+# redis>=5.0.0                      # Redis client (caching)
+# prometheus-client>=0.19.0         # Metrics collection
+# structlog>=24.1.0                 # Structured logging
+# python-jose[cryptography]>=3.3.0  # JWT tokens (auth)
+
+# ============================================================
+# INSTALLATION INSTRUCTIONS
+# ============================================================
+#
+# 1. Create virtual environment:
+#    python -m venv venv
+#    source venv/bin/activate  # On Windows: venv\Scripts\activate
+#
+# 2. Install dependencies:
+#    pip install -r requirements.txt
+#
+# 3. Verify FastMCP installation:
+#    python -c "from fastmcp import FastMCP; print('FastMCP installed!')"
+#
+# 4. Run your first MCP server:
+#    cd mcp-servers/01-basic-calculator
+#    python server.py
+#
+# ============================================================
+# VERSION COMPATIBILITY
+# ============================================================
+# - Python 3.10+ required
+# - FastMCP 2.0+ for latest features
+# - All async libraries for non-blocking I/O
+# AI Generated Code by Deloitte + Cursor (END)
