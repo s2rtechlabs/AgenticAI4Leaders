@@ -288,4 +288,3 @@ fastmcp dev server.py --host 127.0.0.1 --port 8000
 cd mcp-servers/01-basic-calculator
 python server.py
 ```
-# AI Generated Code by Deloitte + Cursor (END)

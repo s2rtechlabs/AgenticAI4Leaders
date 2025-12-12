@@ -1,0 +1,1921 @@
+<!-- AI Generated Code by Deloitte + Cursor (BEGIN) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A Protocol Explorer - Capability Negotiation</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #1e1e2a;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-green: #22c55e;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-red: #ef4444;
+            --accent-cyan: #06b6d4;
+            --border-color: #27272a;
+            --glow-green: rgba(34, 197, 94, 0.2);
+            --glow-blue: rgba(59, 130, 246, 0.2);
+            --glow-purple: rgba(168, 85, 247, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-secondary);
+            padding: 0.5rem;
+            border-radius: 12px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Sidebar - Agent List */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            height: fit-content;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .sidebar h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+
+        .agent-card.selected {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--glow-purple);
+        }
+
+        .agent-card.offline {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .agent-card.matched {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px var(--glow-green);
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .agent-info h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .agent-status {
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.offline {
+            background: var(--accent-red);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .agent-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Match Score Badge */
+        .match-score {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-green);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .agent-card.matched .match-score {
+            display: block;
+        }
+
+        .agent-card {
+            position: relative;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 550px;
+        }
+
+        .chat-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-title h2 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mode-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Negotiation Panel */
+        .negotiation-panel {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 1rem;
+            padding: 1rem;
+            display: none;
+        }
+
+        .negotiation-panel.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .negotiation-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .negotiation-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .neg-result {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .neg-result.best {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px var(--glow-green);
+        }
+
+        .neg-result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .neg-result-agent {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .confidence-badge {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .confidence-badge.high {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-green);
+        }
+
+        .confidence-badge.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-orange);
+        }
+
+        .confidence-badge.low {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .score-bar {
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .matched-keywords {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .matched-keywords span {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            margin-right: 0.25rem;
+        }
+
+        /* Messages */
+        .messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 0.875rem 1rem;
+            border-radius: 14px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.agent {
+            background: var(--bg-tertiary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .message.smart-route {
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.35rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .message.user .message-header {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .routed-badge {
+            font-size: 0.6rem;
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .message-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--accent-red);
+        }
+
+        /* Welcome Message */
+        .welcome-message {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        .welcome-message .icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .welcome-message h3 {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px var(--glow-blue);
+        }
+
+        .send-btn {
+            padding: 0.875rem 1.5rem;
+            background: var(--accent-green);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Capability Explorer Tab */
+        .capability-explorer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .agent-detail-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .agent-detail-header {
+            padding: 1.25rem;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .agent-detail-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+
+        .agent-detail-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .agent-detail-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .agent-detail-body {
+            padding: 1.25rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-detail {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 0.875rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .skill-detail h5 {
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .skill-detail p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .example-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .capability-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cap-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .cap-badge.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+        }
+
+        .cap-badge.inactive {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-red);
+        }
+
+        /* Agent Card JSON */
+        .json-viewer {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+        }
+
+        .json-key { color: var(--accent-purple); }
+        .json-string { color: var(--accent-green); }
+        .json-number { color: var(--accent-orange); }
+        .json-boolean { color: var(--accent-cyan); }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            gap: 0.3rem;
+            padding: 0.5rem;
+        }
+
+        .loading span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loading span:nth-child(1) { animation-delay: -0.32s; }
+        .loading span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Orchestration Demo Styles */
+        .orchestration-demo {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .orch-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .orch-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .orch-header p {
+            color: var(--text-secondary);
+        }
+
+        .scenario-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .scenario-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .scenario-card ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .scenario-card ol li {
+            margin-bottom: 0.25rem;
+        }
+
+        .city-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .city-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .city-input label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .city-input select {
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            min-width: 180px;
+            cursor: pointer;
+        }
+
+        .city-input select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .run-orch-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .run-orch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .run-orch-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .orch-visualization {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            min-height: 400px;
+        }
+
+        .orch-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            color: var(--text-muted);
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Workflow Steps */
+        .workflow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .workflow-step {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--border-color);
+            position: relative;
+            animation: stepSlideIn 0.5s ease;
+        }
+
+        @keyframes stepSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .workflow-step.running {
+            border-left-color: var(--accent-orange);
+        }
+
+        .workflow-step.completed {
+            border-left-color: var(--accent-green);
+        }
+
+        .workflow-step.failed {
+            border-left-color: var(--accent-red);
+        }
+
+        .workflow-step.delegation {
+            border-left-color: var(--accent-purple);
+            background: linear-gradient(135deg, var(--bg-tertiary), rgba(168, 85, 247, 0.1));
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-agent {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .step-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-agent-icon {
+            font-size: 1.25rem;
+        }
+
+        .step-agent-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .step-status {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+        }
+
+        .step-status.running {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .step-status.completed {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+        }
+
+        .step-status.failed {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+        }
+
+        .step-action {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-response {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            color: var(--text-primary);
+            margin-top: 0.75rem;
+        }
+
+        .delegation-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--accent-purple);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .extracted-value {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* Final Result */
+        .final-result {
+            background: linear-gradient(135deg, var(--bg-tertiary), rgba(6, 182, 212, 0.1));
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--accent-cyan);
+            text-align: center;
+        }
+
+        .final-result h3 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .result-equation {
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .result-city {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--bg-secondary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+        }
+
+        .result-city-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .result-city-temp {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .result-operator {
+            font-size: 2rem;
+            color: var(--accent-purple);
+        }
+
+        .result-equals {
+            font-size: 2rem;
+            color: var(--accent-cyan);
+        }
+
+        .result-sum {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+            .capability-explorer {
+                grid-template-columns: 1fr;
+            }
+            .city-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .city-input select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🔗</div>
+            <h1>A2A Protocol Explorer</h1>
+            <p class="subtitle">Agent Discovery & Capability Negotiation Demo</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('chat')">💬 Chat</button>
+            <button class="tab" onclick="switchTab('orchestrate')">🔗 Agent Orchestration</button>
+            <button class="tab" onclick="switchTab('explorer')">🔍 Capability Explorer</button>
+        </div>
+
+        <!-- Chat Tab -->
+        <div class="tab-content active" id="tab-chat">
+            <div class="main-content">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <h2>🤖 Available Agents</h2>
+                    <div id="agent-list">
+                        <div class="agent-card">
+                            <div class="loading">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Chat Area -->
+                <main class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-title">
+                            <span id="current-agent-icon">💬</span>
+                            <h2 id="current-agent-name">Select an Agent</h2>
+                        </div>
+                        <div class="mode-buttons">
+                            <button class="mode-btn" id="direct-btn" onclick="setMode('direct')">
+                                🎯 Direct Send
+                            </button>
+                            <button class="mode-btn active" id="smart-btn" onclick="setMode('smart')">
+                                🧠 Smart Route
+                            </button>
+                            <button class="mode-btn" id="broadcast-btn" onclick="setMode('broadcast')">
+                                📡 Broadcast
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Negotiation Panel -->
+                    <div class="negotiation-panel" id="negotiation-panel">
+                        <div class="negotiation-header">
+                            ⚡ Capability Negotiation Results
+                        </div>
+                        <div class="negotiation-results" id="negotiation-results">
+                            <!-- Filled dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="messages" id="messages">
+                        <div class="welcome-message">
+                            <div class="icon">🧠</div>
+                            <h3>Smart Routing Enabled</h3>
+                            <p>Type a message and the system will automatically find the best agent based on capability negotiation</p>
+                        </div>
+                    </div>
+
+                    <div class="input-area">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                class="message-input" 
+                                id="message-input"
+                                placeholder="Try: 'Add 5 and 3', 'Hello in Spanish', 'Weather in Tokyo'..."
+                                onkeypress="handleKeyPress(event)"
+                            >
+                        </div>
+                        <button class="send-btn" id="send-btn" onclick="sendMessage()">
+                            Send →
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Agent Orchestration Tab -->
+        <div class="tab-content" id="tab-orchestrate">
+            <div class="orchestration-demo">
+                <div class="orch-header">
+                    <h2>🔗 Multi-Agent Orchestration Demo</h2>
+                    <p>Watch agents negotiate and delegate tasks in real-time</p>
+                </div>
+                
+                <div class="orch-scenario">
+                    <div class="scenario-card">
+                        <h3>📊 Temperature Sum Calculator</h3>
+                        <p>This demo shows how agents collaborate:</p>
+                        <ol>
+                            <li><strong>Weather Agent</strong> gets temperature for City 1</li>
+                            <li><strong>Weather Agent</strong> gets temperature for City 2</li>
+                            <li><strong>Capability Negotiation:</strong> Weather Agent can't do math!</li>
+                            <li><strong>Calculator Agent</strong> is delegated to add the temperatures</li>
+                            <li>Results are aggregated and displayed</li>
+                        </ol>
+                        
+                        <div class="city-selector">
+                            <div class="city-input">
+                                <label>City 1:</label>
+                                <select id="city1">
+                                    <option value="tokyo">Tokyo 🇯🇵</option>
+                                    <option value="moscow">Moscow 🇷🇺</option>
+                                    <option value="london">London 🇬🇧</option>
+                                    <option value="dubai">Dubai 🇦🇪</option>
+                                    <option value="new york">New York 🇺🇸</option>
+                                    <option value="singapore">Singapore 🇸🇬</option>
+                                    <option value="mumbai">Mumbai 🇮🇳</option>
+                                    <option value="beijing">Beijing 🇨🇳</option>
+                                </select>
+                            </div>
+                            <div class="city-input">
+                                <label>City 2:</label>
+                                <select id="city2">
+                                    <option value="moscow" selected>Moscow 🇷🇺</option>
+                                    <option value="tokyo">Tokyo 🇯🇵</option>
+                                    <option value="london">London 🇬🇧</option>
+                                    <option value="dubai">Dubai 🇦🇪</option>
+                                    <option value="new york">New York 🇺🇸</option>
+                                    <option value="singapore">Singapore 🇸🇬</option>
+                                    <option value="mumbai">Mumbai 🇮🇳</option>
+                                    <option value="beijing">Beijing 🇨🇳</option>
+                                </select>
+                            </div>
+                            <button class="run-orch-btn" onclick="runOrchestration()">
+                                ▶️ Run Orchestration
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="orch-visualization" id="orch-visualization">
+                    <div class="orch-placeholder">
+                        <div class="placeholder-icon">🎬</div>
+                        <p>Select cities and click "Run Orchestration" to see agents collaborate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Capability Explorer Tab -->
+        <div class="tab-content" id="tab-explorer">
+            <div class="capability-explorer" id="capability-explorer">
+                <!-- Filled dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let agents = [];
+        let selectedAgent = null;
+        let currentMode = 'smart'; // 'direct', 'smart', 'broadcast'
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAgents();
+        });
+
+        async function loadAgents() {
+            try {
+                const response = await fetch('/api/agents');
+                const data = await response.json();
+                agents = data.agents;
+                renderAgents();
+                renderCapabilityExplorer();
+            } catch (error) {
+                console.error('Failed to load agents:', error);
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+
+        function renderAgents(matchResults = null) {
+            const container = document.getElementById('agent-list');
+            
+            container.innerHTML = agents.map(agent => {
+                const match = matchResults?.find(m => m.agent_id === agent.id);
+                const isMatched = match && match.score > 0;
+                const isBest = matchResults && matchResults[0]?.agent_id === agent.id && match?.score > 0;
+                
+                return `
+                    <div class="agent-card ${agent.online ? '' : 'offline'} 
+                                ${selectedAgent?.id === agent.id ? 'selected' : ''} 
+                                ${isBest ? 'matched' : ''}"
+                         onclick="${agent.online ? `selectAgent('${agent.id}')` : ''}">
+                        ${isMatched ? `<span class="match-score">${match.score}%</span>` : ''}
+                        <div class="agent-header">
+                            <div class="agent-icon">${agent.icon}</div>
+                            <div class="agent-info">
+                                <h3>${agent.name}</h3>
+                                <div class="agent-status">
+                                    <span class="status-dot ${agent.online ? '' : 'offline'}"></span>
+                                    ${agent.online ? 'Online' : 'Offline'}
+                                    ${agent.version ? ` • v${agent.version}` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="agent-skills">
+                            ${agent.skills.slice(0, 3).map(skill => 
+                                `<span class="skill-tag">${skill.name}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCapabilityExplorer() {
+            const container = document.getElementById('capability-explorer');
+            
+            container.innerHTML = agents.filter(a => a.online).map(agent => `
+                <div class="agent-detail-card">
+                    <div class="agent-detail-header">
+                        <div class="agent-detail-icon">${agent.icon}</div>
+                        <div class="agent-detail-info">
+                            <h3>${agent.name}</h3>
+                            <p>${agent.description}</p>
+                        </div>
+                    </div>
+                    <div class="agent-detail-body">
+                        <div class="detail-section">
+                            <h4>📋 Skills (${agent.skills.length})</h4>
+                            ${agent.skills.map(skill => `
+                                <div class="skill-detail">
+                                    <h5>${skill.name}</h5>
+                                    <p>${skill.description}</p>
+                                    ${skill.examples ? `
+                                        <div class="skill-examples">
+                                            ${skill.examples.slice(0, 3).map(ex => 
+                                                `<span class="example-tag">"${ex}"</span>`
+                                            ).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h4>⚙️ Capabilities</h4>
+                            <div class="capability-badges">
+                                <span class="cap-badge ${agent.capabilities?.streaming ? 'active' : 'inactive'}">
+                                    ${agent.capabilities?.streaming ? '✓' : '✗'} Streaming
+                                </span>
+                                <span class="cap-badge active">
+                                    ✓ Text Input
+                                </span>
+                                <span class="cap-badge active">
+                                    ✓ Text Output
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h4>🔗 Agent Card (Raw)</h4>
+                            <div class="json-viewer">
+                                <pre>${syntaxHighlight(agent.agentCard)}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function syntaxHighlight(obj) {
+            if (!obj) return 'null';
+            let json = JSON.stringify(obj, null, 2);
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        function selectAgent(agentId) {
+            selectedAgent = agents.find(a => a.id === agentId);
+            setMode('direct');
+            renderAgents();
+            
+            document.getElementById('current-agent-icon').textContent = selectedAgent.icon;
+            document.getElementById('current-agent-name').textContent = selectedAgent.name;
+            
+            hideNegotiationPanel();
+            
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = `
+                <div class="welcome-message">
+                    <div class="icon">${selectedAgent.icon}</div>
+                    <h3>Chat with ${selectedAgent.name}</h3>
+                    <p>${selectedAgent.description}</p>
+                </div>
+            `;
+            
+            document.getElementById('message-input').focus();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`${mode}-btn`).classList.add('active');
+            
+            hideNegotiationPanel();
+            
+            if (mode === 'smart') {
+                selectedAgent = null;
+                renderAgents();
+                document.getElementById('current-agent-icon').textContent = '🧠';
+                document.getElementById('current-agent-name').textContent = 'Smart Routing';
+                
+                const messagesContainer = document.getElementById('messages');
+                messagesContainer.innerHTML = `
+                    <div class="welcome-message">
+                        <div class="icon">🧠</div>
+                        <h3>Smart Routing Enabled</h3>
+                        <p>Type a message and the system will automatically find the best agent based on capability negotiation</p>
+                    </div>
+                `;
+            } else if (mode === 'broadcast') {
+                selectedAgent = null;
+                renderAgents();
+                document.getElementById('current-agent-icon').textContent = '📡';
+                document.getElementById('current-agent-name').textContent = 'Broadcast Mode';
+                
+                const messagesContainer = document.getElementById('messages');
+                messagesContainer.innerHTML = `
+                    <div class="welcome-message">
+                        <div class="icon">📡</div>
+                        <h3>Broadcast Mode</h3>
+                        <p>Your message will be sent to all agents simultaneously</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('message-input').focus();
+        }
+
+        function hideNegotiationPanel() {
+            document.getElementById('negotiation-panel').classList.remove('visible');
+        }
+
+        function showNegotiationPanel(results) {
+            const panel = document.getElementById('negotiation-panel');
+            const container = document.getElementById('negotiation-results');
+            
+            container.innerHTML = results.map((r, i) => `
+                <div class="neg-result ${i === 0 && r.score > 0 ? 'best' : ''}">
+                    <div class="neg-result-header">
+                        <span class="neg-result-agent">
+                            ${r.icon} ${r.agent_name}
+                        </span>
+                        <span class="confidence-badge ${r.confidence}">${r.confidence}</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: ${r.score}%"></div>
+                    </div>
+                    <div class="matched-keywords">
+                        ${r.matched_keywords.length > 0 
+                            ? `Matched: ${r.matched_keywords.map(k => `<span>${k}</span>`).join('')}`
+                            : '<span style="color: var(--text-muted)">No keywords matched</span>'
+                        }
+                    </div>
+                </div>
+            `).join('');
+            
+            panel.classList.add('visible');
+            
+            // Update agent cards with match info
+            renderAgents(results);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            if (currentMode === 'direct' && !selectedAgent) {
+                alert('Please select an agent for direct messaging');
+                return;
+            }
+            
+            input.value = '';
+            addMessage('user', message, 'You');
+            
+            const loadingId = addLoading();
+            
+            try {
+                if (currentMode === 'smart') {
+                    // Smart routing with capability negotiation
+                    const response = await fetch('/api/smart-send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message })
+                    });
+                    const data = await response.json();
+                    
+                    removeLoading(loadingId);
+                    
+                    // Check if this is a multi-agent workflow
+                    if (data.is_multi_agent) {
+                        addMultiAgentResult(data);
+                    } else {
+                        // Show negotiation results for single agent
+                        showNegotiationPanel(data.negotiation.negotiation_results);
+                        
+                        if (data.success) {
+                            addMessage('agent', data.response, data.selected_agent.name, 
+                                       data.selected_agent.icon, true);
+                        } else {
+                            addMessage('error', data.error || 'No suitable agent found', 'System', '❌');
+                        }
+                    }
+                    
+                } else if (currentMode === 'broadcast') {
+                    // Broadcast to all agents
+                    const response = await fetch('/api/broadcast', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ agent_id: 'all', message })
+                    });
+                    const data = await response.json();
+                    
+                    removeLoading(loadingId);
+                    addBroadcastResults(data.results);
+                    
+                } else {
+                    // Direct send to selected agent
+                    const response = await fetch('/api/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ agent_id: selectedAgent.id, message })
+                    });
+                    const data = await response.json();
+                    
+                    removeLoading(loadingId);
+                    
+                    if (data.success) {
+                        addMessage('agent', data.response, selectedAgent.name, selectedAgent.icon);
+                    } else {
+                        addMessage('error', `Error: ${data.error}`, selectedAgent.name, '❌');
+                    }
+                }
+            } catch (error) {
+                removeLoading(loadingId);
+                addMessage('error', `Network error: ${error.message}`, 'System', '❌');
+            }
+        }
+
+        function addMessage(type, content, sender, icon = '', isSmartRouted = false) {
+            const messagesContainer = document.getElementById('messages');
+            
+            const welcome = messagesContainer.querySelector('.welcome-message');
+            if (welcome) welcome.remove();
+            
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type} ${isSmartRouted ? 'smart-route' : ''}`;
+            messageEl.innerHTML = `
+                <div class="message-header">
+                    ${icon} ${sender}
+                    ${isSmartRouted ? '<span class="routed-badge">AUTO-ROUTED</span>' : ''}
+                </div>
+                <div class="message-content">${escapeHtml(content)}</div>
+            `;
+            
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addLoading() {
+            const messagesContainer = document.getElementById('messages');
+            const id = 'loading-' + Date.now();
+            
+            const loadingEl = document.createElement('div');
+            loadingEl.id = id;
+            loadingEl.className = 'message agent';
+            loadingEl.innerHTML = `
+                <div class="loading">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(loadingEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            return id;
+        }
+
+        function removeLoading(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function addBroadcastResults(results) {
+            const messagesContainer = document.getElementById('messages');
+            
+            const resultsEl = document.createElement('div');
+            resultsEl.className = 'message agent';
+            resultsEl.style.maxWidth = '100%';
+            
+            resultsEl.innerHTML = `
+                <div class="message-header">📡 Broadcast Results</div>
+                <div class="negotiation-results" style="margin-top: 0.5rem;">
+                    ${results.map(r => `
+                        <div class="neg-result">
+                            <div class="neg-result-header">
+                                <span class="neg-result-agent">${r.icon} ${r.agent_name}</span>
+                                ${r.success ? '✅' : '❌'}
+                            </div>
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem; white-space: pre-wrap;">
+                                ${r.success ? escapeHtml(r.response) : escapeHtml(r.error)}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(resultsEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function addMultiAgentResult(data) {
+            const messagesContainer = document.getElementById('messages');
+            
+            // Remove welcome message if present
+            const welcome = messagesContainer.querySelector('.welcome-message');
+            if (welcome) welcome.remove();
+            
+            // Hide single-agent negotiation panel
+            hideNegotiationPanel();
+            
+            // Create the multi-agent workflow visualization
+            let stepsHtml = '';
+            
+            for (const step of data.steps) {
+                const isNegotiation = step.type === 'capability_negotiation';
+                const isDelegation = step.is_delegation;
+                
+                if (isNegotiation) {
+                    stepsHtml += `
+                        <div class="workflow-step ${isDelegation ? 'delegation' : ''}" style="border-left-color: ${isDelegation ? 'var(--accent-purple)' : 'var(--accent-cyan)'}">
+                            <div class="step-header">
+                                <div class="step-agent">
+                                    <span class="step-number">${step.step}</span>
+                                    <div class="step-agent-info">
+                                        <span class="step-agent-icon">${step.icon}</span>
+                                        <span class="step-agent-name">${isDelegation ? 'Capability Delegation' : 'Capability Negotiation'}</span>
+                                    </div>
+                                </div>
+                                <span class="step-status completed">✓ Analyzed</span>
+                            </div>
+                            <div class="step-action">${step.description}</div>
+                            ${step.analysis ? `<div style="font-size: 0.8rem; color: var(--accent-orange); margin: 0.5rem 0; font-family: 'JetBrains Mono', monospace;">${step.analysis}</div>` : ''}
+                            <div style="font-size: 0.85rem; color: ${isDelegation ? 'var(--accent-purple)' : 'var(--accent-green)'}; margin-top: 0.5rem;">
+                                → ${step.result}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    stepsHtml += `
+                        <div class="workflow-step ${step.status}" ${step.delegation_reason ? 'style="border-left-color: var(--accent-purple)"' : ''}>
+                            <div class="step-header">
+                                <div class="step-agent">
+                                    <span class="step-number">${step.step}</span>
+                                    <div class="step-agent-info">
+                                        <span class="step-agent-icon">${step.icon}</span>
+                                        <span class="step-agent-name">${step.agent}</span>
+                                    </div>
+                                </div>
+                                <span class="step-status ${step.status}">
+                                    ${step.status === 'completed' ? '✓ Completed' : step.status === 'failed' ? '✗ Failed' : '● Running'}
+                                </span>
+                            </div>
+                            ${step.delegation_reason ? `<div class="delegation-badge">🔄 DELEGATED</div>` : ''}
+                            <div class="step-action">${step.action}</div>
+                            ${step.extracted_value !== undefined ? `
+                                <div class="extracted-value">📊 Extracted: ${step.extracted_value}°C</div>
+                            ` : ''}
+                            ${step.response ? `<div class="step-response">${escapeHtml(step.response)}</div>` : ''}
+                        </div>
+                    `;
+                }
+            }
+            
+            // Add final result
+            const summary = data.summary;
+            if (summary && summary.result !== null) {
+                stepsHtml += `
+                    <div class="final-result">
+                        <h3>✨ Multi-Agent Orchestration Complete</h3>
+                        <div class="result-equation">
+                            <div class="result-city">
+                                <span class="result-city-name">${summary.city1.name}</span>
+                                <span class="result-city-temp">${summary.city1.temperature}°C</span>
+                            </div>
+                            <span class="result-operator">${summary.op_symbol}</span>
+                            <div class="result-city">
+                                <span class="result-city-name">${summary.city2.name}</span>
+                                <span class="result-city-temp">${summary.city2.temperature}°C</span>
+                            </div>
+                            <span class="result-equals">=</span>
+                            <span class="result-sum">${summary.result}°C</span>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                            Agents: ${data.agents_used.join(' → ')} | 
+                            Capability Negotiations: ${data.capability_negotiations}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const resultEl = document.createElement('div');
+            resultEl.className = 'message agent';
+            resultEl.style.maxWidth = '100%';
+            resultEl.innerHTML = `
+                <div class="message-header">
+                    🔗 Multi-Agent Orchestration
+                    <span class="routed-badge" style="background: rgba(168, 85, 247, 0.2); color: var(--accent-purple);">
+                        ${data.agents_used.length} AGENTS
+                    </span>
+                </div>
+                <div class="workflow-container" style="margin-top: 0.75rem;">
+                    ${stepsHtml}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(resultEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Orchestration Demo
+        async function runOrchestration() {
+            const city1 = document.getElementById('city1').value;
+            const city2 = document.getElementById('city2').value;
+            const vizContainer = document.getElementById('orch-visualization');
+            const runBtn = document.querySelector('.run-orch-btn');
+            
+            // Disable button
+            runBtn.disabled = true;
+            runBtn.textContent = '⏳ Running...';
+            
+            // Show initial state
+            vizContainer.innerHTML = `
+                <div class="workflow-container" id="workflow-steps">
+                    <div class="workflow-step running" id="step-1">
+                        <div class="step-header">
+                            <div class="step-agent">
+                                <span class="step-number">1</span>
+                                <div class="step-agent-info">
+                                    <span class="step-agent-icon">🌤️</span>
+                                    <span class="step-agent-name">Weather Agent</span>
+                                </div>
+                            </div>
+                            <span class="step-status running">
+                                <span class="loading"><span></span><span></span><span></span></span>
+                                Running
+                            </span>
+                        </div>
+                        <div class="step-action">Fetching temperature for ${city1.charAt(0).toUpperCase() + city1.slice(1)}...</div>
+                    </div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/api/orchestrate/temperature-sum', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ city1, city2 })
+                });
+                
+                const data = await response.json();
+                
+                // Build visualization with animation delays
+                let stepsHtml = '';
+                
+                for (let i = 0; i < data.steps.length; i++) {
+                    const step = data.steps[i];
+                    const isDelegation = step.delegation_from !== undefined;
+                    
+                    stepsHtml += `
+                        <div class="workflow-step ${step.status} ${isDelegation ? 'delegation' : ''}" 
+                             style="animation-delay: ${i * 0.2}s">
+                            <div class="step-header">
+                                <div class="step-agent">
+                                    <span class="step-number">${step.step}</span>
+                                    <div class="step-agent-info">
+                                        <span class="step-agent-icon">${step.icon}</span>
+                                        <span class="step-agent-name">${step.agent}</span>
+                                    </div>
+                                </div>
+                                <span class="step-status ${step.status}">
+                                    ${step.status === 'completed' ? '✓ Completed' : 
+                                      step.status === 'failed' ? '✗ Failed' : 
+                                      step.status === 'skipped' ? '⊘ Skipped' : '● Running'}
+                                </span>
+                            </div>
+                            ${isDelegation ? `
+                                <div class="delegation-badge">
+                                    🔄 CAPABILITY DELEGATION
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--accent-purple); margin-bottom: 0.5rem;">
+                                    ${step.delegation_reason}
+                                </div>
+                            ` : ''}
+                            <div class="step-action">${step.action}</div>
+                            ${step.response ? `
+                                <div class="step-response">${escapeHtml(step.response)}</div>
+                            ` : ''}
+                            ${step.extracted_value !== undefined && step.extracted_value !== null ? `
+                                <div class="extracted-value">
+                                    📊 Extracted: ${step.extracted_value}°C
+                                </div>
+                            ` : ''}
+                            ${step.error ? `
+                                <div class="step-response" style="color: var(--accent-red);">Error: ${step.error}</div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                
+                // Add final result
+                if (data.sum !== null) {
+                    stepsHtml += `
+                        <div class="final-result">
+                            <h3>✨ Orchestration Complete - Result Aggregated</h3>
+                            <div class="result-equation">
+                                <div class="result-city">
+                                    <span class="result-city-name">${data.city1.name}</span>
+                                    <span class="result-city-temp">${data.city1.temperature}°C</span>
+                                </div>
+                                <span class="result-operator">+</span>
+                                <div class="result-city">
+                                    <span class="result-city-name">${data.city2.name}</span>
+                                    <span class="result-city-temp">${data.city2.temperature}°C</span>
+                                </div>
+                                <span class="result-equals">=</span>
+                                <span class="result-sum">${data.sum}°C</span>
+                            </div>
+                            <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+                                Agents involved: ${data.agents_involved.join(' → ')} | 
+                                Pattern: ${data.delegation_pattern}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                vizContainer.innerHTML = `<div class="workflow-container">${stepsHtml}</div>`;
+                
+            } catch (error) {
+                vizContainer.innerHTML = `
+                    <div class="orch-placeholder" style="color: var(--accent-red);">
+                        <div class="placeholder-icon">❌</div>
+                        <p>Error: ${error.message}</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Make sure all agents are running</p>
+                    </div>
+                `;
+            }
+            
+            // Re-enable button
+            runBtn.disabled = false;
+            runBtn.textContent = '▶️ Run Orchestration';
+        }
+    </script>
+</body>
+</html>
+<!-- AI Generated Code by Deloitte + Cursor (END) -->

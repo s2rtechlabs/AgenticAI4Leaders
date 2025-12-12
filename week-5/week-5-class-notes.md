@@ -562,4 +562,3 @@ CMD ["python", "server.py"]
 ---
 
 **Remember**: With FastMCP, building MCP servers is as easy as writing Python functions! 🐍✨
-# AI Generated Code by Deloitte + Cursor (END)

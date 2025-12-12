@@ -223,4 +223,3 @@ Design and implement an MCP architecture:
 ---
 
 **Ready to build?** Start with the [Quick Start Guide](QUICK_START.md)! 🚀
-# AI Generated Code by Deloitte + Cursor (END)

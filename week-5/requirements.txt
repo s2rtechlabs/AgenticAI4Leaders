@@ -71,4 +71,3 @@ pytest-asyncio>=0.23.0              # Async test support
 # - Python 3.10+ required
 # - FastMCP 2.0+ for latest features
 # - All async libraries for non-blocking I/O
-# AI Generated Code by Deloitte + Cursor (END)
