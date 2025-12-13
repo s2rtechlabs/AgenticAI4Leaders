@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "gnews": {
+      "command": "python",
+      "args": [
+        "main.py"
+      ]
+    }
+  }
+}
